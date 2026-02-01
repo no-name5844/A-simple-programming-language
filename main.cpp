@@ -63,7 +63,9 @@ void Interpreter::add(std::string str){
 }
 //./md
 void Interpreter::run(){
-
+  while (this->pc < this->data.size()){
+    this->step();
+  }
 }
 void Interpreter::step(){
   if (this->pc < this->data.size()){
@@ -102,6 +104,7 @@ void Interpreter::step(){
       if (this->reg[std::stoi(token[1])] > 0&&std::stoi(token[3]) >= 0){
         if(this->reg[std::stoi(token[1])]>0){
         this->pc = std::stoi(token[3]);
+        return;
       }
       }
       
@@ -110,17 +113,20 @@ void Interpreter::step(){
       if (this->pc > std::stoi(token[3])&&std::stoi(token[3]) >= 0){
         if(this->reg[std::stoi(token[1])]>=0){
         this->pc = std::stoi(token[3]);
+        return;
       }
       }
     }
     else if (token[0] == "ifeq"&&token.size() == 5&&isNumber(token[1])&&token[3] == "=="&&isNumber(token[4])&&isNumber(token[2])&&this->pc > std::stoi(token[4])){  
       if (this->reg[std::stoi(token[1])] == this->reg[std::stoi(token[4])]&&std::stoi(token[4]) >= 0){
         this->pc = std::stoi(token[4]);
+        return;
       }
     }
     else if (token[0] == "ifneq"&&token.size() == 5&&isNumber(token[1])&&token[3] == "!="&&isNumber(token[4])&&isNumber(token[2])&&this->pc > std::stoi(token[4])){  
       if (this->reg[std::stoi(token[1])] != this->reg[std::stoi(token[4])]&&std::stoi(token[4]) >= 0){
         this->pc = std::stoi(token[4]);
+        return;
       }
     }
     else
