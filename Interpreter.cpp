@@ -12,6 +12,9 @@ Interpreter::Interpreter(std::string data ){
     
     while (data[j]!='\n'&&j<data.size())
     {
+      if (data[j] == '#'){
+        break;
+      }
       tempData+=data[j];
       j++;
     } 
