@@ -28,6 +28,9 @@ int main(int argc, char const *argv[])
       else if (input == "clear"){
         interpreter=Interpreter();
       }
+      else if(input == "reset"){
+        interpreter.reset();
+      }
       else{
         interpreter.add(input);
       }
