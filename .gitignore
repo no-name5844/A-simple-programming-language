@@ -1,0 +1,15 @@
+1.e
+Interpreter.o
+main.o
+
+.vscode/tasks.json
+1.e
+libInterpreter.lib
+.vscode/launch.json
+.vscode/settings.json
+main.exe
+.vscode/settings.json
+files.zip
+.vscode/settings.json
+Example/gcd.e
+Example/mul.e
