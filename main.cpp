@@ -4,7 +4,7 @@
 int main(int argc, char const *argv[])
 {
 
-  Interpreter interpreter=Interpreter();
+  Interpreter interpreter=Interpreter("",1000/60);
   if (argc ==3 && (int)strcmp(argv[1],"-f") == 0){
     std::ifstream file(argv[2]);
     std::string data((std::istreambuf_iterator<char>(file)),
@@ -13,6 +13,7 @@ int main(int argc, char const *argv[])
     
   } 
     while (true){
+
       std::string input;
       std::getline(std::cin, input);
       
@@ -34,6 +35,7 @@ int main(int argc, char const *argv[])
       else{
         interpreter.add(input);
       }
+      _sleep(1000/60);
     }
   
   return 0;

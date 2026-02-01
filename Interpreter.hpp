@@ -21,7 +21,7 @@ struct Command
 
 class Interpreter{
 public:
-  Interpreter(std::string data="" );
+  Interpreter(std::string data="",int delay=1000/60 );
   ~Interpreter();
   std::vector<Command> data;
   void run();
@@ -31,6 +31,7 @@ public:
   std::unordered_map<int,int64_t> reg;
   void debug();
   void reset();
+  int delay=1000/60;
 };
 
 enum class ErrorType{

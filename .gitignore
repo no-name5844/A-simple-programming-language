@@ -10,10 +10,7 @@ libInterpreter.lib
 main.exe
 .vscode/settings.json
 files.zip
-.vscode/settings.json
-Example/gcd.e
-Example/mul.e
-Example/354.rm
-.vscode/settings.json
-Example/add.e
-.vscode/settings.json
+.vscode/*
+Example/*
+
+

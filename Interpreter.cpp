@@ -50,7 +50,8 @@ Command getOpType(std::vector<std::string> tokens){
     return Command{OpType::Null, {}};
   }
 }
-Interpreter::Interpreter(std::string data){
+Interpreter::Interpreter(std::string data,int delay){
+  this->delay=delay;
   std::vector<Command> commands;
   std::string tempstr;
   int j=0;
@@ -103,6 +104,7 @@ void Interpreter::run(){
 }
 void Interpreter::step(){
   if (this->pc >= this->data.size()){
+
     return;
   }
   Command command = this->data[this->pc];
@@ -150,6 +152,7 @@ void Interpreter::step(){
   default:
     break;
   }
+  _sleep(this->delay);
 }
 std::string opTypeToString(OpType type){
   switch (type){
