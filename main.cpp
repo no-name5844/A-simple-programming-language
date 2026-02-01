@@ -1,17 +1,17 @@
 #include "main.hpp"
 #include "Interpreter.hpp"
+#include <cstring>
 int main(int argc, char const *argv[])
 {
-  
-  if (argc ==3 && std::string(argv[1]) == "-f"){
+
+  Interpreter interpreter=Interpreter();
+  if (argc ==3 && (int)strcmp(argv[1],"-f") == 0){
     std::ifstream file(argv[2]);
     std::string data((std::istreambuf_iterator<char>(file)),
                      std::istreambuf_iterator<char>());
-    Interpreter interpreter(data);
-    interpreter.run();
-    return 0;
-  } else {
-    Interpreter interpreter=Interpreter();
+    interpreter=Interpreter(data);
+    
+  } 
     while (true){
       std::string input;
       std::getline(std::cin, input);
@@ -22,14 +22,16 @@ int main(int argc, char const *argv[])
         interpreter.step();
       } else if (input == "run"){
         interpreter.run();
-        interpreter=Interpreter();
       } else if (input == "debug"){
         interpreter.debug();
+      }
+      else if (input == "clear"){
+        interpreter=Interpreter();
       }
       else{
         interpreter.add(input);
       }
     }
-  }
+  
   return 0;
 }

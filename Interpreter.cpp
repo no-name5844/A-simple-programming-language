@@ -3,8 +3,8 @@ bool isNumber(std::string str);
 Interpreter::Interpreter(std::string data ){
   bool isEnd = false;
     int j=0;
-  for (int i=0;j<data.size();i++){
-    std::string tempData;
+    for (int i=0;j<data.size();i++){
+    std::string tempData("");
     while (data[j]==' ')
     {
       j++;
@@ -12,9 +12,11 @@ Interpreter::Interpreter(std::string data ){
     
     while (data[j]!='\n'&&j<data.size())
     {
-      tempData+=data[i];
+      tempData+=data[j];
       j++;
     } 
+    j++;
+
     this->data.push_back(tempData);
   }
 }
@@ -97,7 +99,7 @@ void Interpreter::step(){
     }
     else
     {
-      throw std::runtime_error("Invalid instruction");
+      std::cout<<"Invalid instruction:"<<line<<std::endl;
     }
     
     this->pc++;
