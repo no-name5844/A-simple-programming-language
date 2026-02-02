@@ -9,3 +9,4 @@ Example/*
 *.o
 *.lib
 *.zip
+*.json
