@@ -10,7 +10,8 @@ enum class OpType{
   IfEq,
   IfNeq,
   Set,
-  Null
+  Null,
+  Error,
 };
 
 struct Command

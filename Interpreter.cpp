@@ -47,7 +47,7 @@ Command getOpType(std::vector<std::string> tokens){
     return Command{OpType::Set, {std::stoll(tokens[1]), std::stoll(tokens[2])}};
   }
   else{
-    return Command{OpType::Null, {}};
+    return Command{OpType::Error, {}};
   }
 }
 Interpreter::Interpreter(std::string data,int delay){
@@ -57,7 +57,9 @@ Interpreter::Interpreter(std::string data,int delay){
   int j=0;
   while (j<data.size() ){
     if (data[j] == '\n'||data[j]=='\r'){
-      commands.push_back(getOpType(strToTokens(tempstr)));
+      if (getOpType(strToTokens(tempstr)).type != OpType::Null){
+        commands.push_back(getOpType(strToTokens(tempstr)));
+      }
       tempstr.clear();
     }
     else{
@@ -146,8 +148,17 @@ void Interpreter::step(){
   case OpType::Set:
     this->reg[command.val[0]] = this->reg[command.val[1]];
     break;
+  case OpType::Error:
+    std::cout << "Error: " << opTypeToString(command.type) << " at pc: " << this->pc-1  << std::endl;
+    for (auto it = command.val.begin(); it != command.val.end(); it++){
+      std::cout << *it << std::endl;
+    }
+    std::cout << "reg: " << std::endl;
+    for (auto it = this->reg.begin(); it != this->reg.end(); it++){
+      std::cout << it->first << ": " << it->second << std::endl;
+    }
   case OpType::Null:
-
+    
     break;
   default:
     break;
@@ -165,7 +176,7 @@ std::string opTypeToString(OpType type){
     case OpType::IfEq: return "IfEq";
     case OpType::IfNeq: return "IfNeq";
     case OpType::Set: return "Set";
-    case OpType::Null: return "Null";
+    case OpType::Error: return "Error";
     default: return "Unknown";
   }
 }
