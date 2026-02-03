@@ -67,6 +67,7 @@ Interpreter::Interpreter(std::string data,int delay){
     }
     j++;
   }
+  commands.push_back(getOpType(strToTokens(tempstr)));
   this->data = commands;
 }
 std::vector<std::string> strToTokens(std::string str){
