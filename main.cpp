@@ -1,8 +1,20 @@
 #include "main.hpp"
 #include "Interpreter.hpp"
 #include <cstring>
+#include <thread>
+enum class State{
+  Add,
+  Clear,
+  Debug,
+  Exit,
+  Reset,
+  Run,
+  Step,
+  Free
+};
 int main(int argc, char const *argv[])
 {
+  State state=State::Free;
   std::fstream fileConfig;
   fileConfig.open("config.json", std::ios::in);
   if (!fileConfig.is_open()){
@@ -20,7 +32,7 @@ int main(int argc, char const *argv[])
     config["delay"] = 1000/60;
   }
   
-  Interpreter interpreter=Interpreter("",config["delay"]);
+  Interpreter interpreter=Interpreter();
 
   if (argc ==3 && (int)strcmp(argv[1],"-f") == 0){
     std::ifstream file(argv[2]);
@@ -33,6 +45,15 @@ int main(int argc, char const *argv[])
 
       std::string input;
       std::getline(std::cin, input);
+      if (state == State::Run)
+      {
+        if (interpreter.pc >= interpreter.data.size()){
+          state=State::Free;
+        }
+        interpreter.step();
+        std::this_thread::sleep_for(std::chrono::milliseconds(config["delay"]));
+        continue;
+      }
       
       if (input == "exit"){
         break;
@@ -52,7 +73,7 @@ int main(int argc, char const *argv[])
       else{
         interpreter.add(input);
       }
-      _sleep(config["delay"]);
+      std::this_thread::sleep_for(std::chrono::milliseconds(config["delay"]));
     }
   
   return 0;

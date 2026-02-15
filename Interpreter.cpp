@@ -9,7 +9,7 @@ std::string opTypeToString(OpType type);
 // Function implementations
 bool isNumber(std::string str){
   for (int i=0;i<str.size();i++){
-    if (str[i] < '0' || str[i] > '9'||str[i] == '-'){
+    if (str[i] < '0' || str[i] > '9'){// 不允许负号
       return false;
     }
   }
@@ -50,8 +50,8 @@ Command getOpType(std::vector<std::string> tokens){
     return Command{OpType::Error, {}};
   }
 }
-Interpreter::Interpreter(std::string data,int delay){
-  this->delay=delay;
+Interpreter::Interpreter(std::string data){
+  
   std::vector<Command> commands;
   std::string tempstr;
   int j=0;
@@ -78,7 +78,7 @@ std::vector<std::string> strToTokens(std::string str){
   while (str[j] == ' '||str[j] == '\0'||str[j] == '\n'||str[j] == '\r'){
       j++;
   }
-  while (j<=str.size()){
+  while (j<str.size()){
       if (str[j] == '#'){
         break;
       }
@@ -121,7 +121,7 @@ void Interpreter::step(){
     this->reg[command.val[0]]--;
     break;
   case OpType::In:
-    std::cin >> this->reg[command.val[0]];
+    std::cin >> this->reg[command.val[0]];    
     break;
   case OpType::Out:
     std::cout << this->reg[command.val[0]] << std::endl;
@@ -133,7 +133,7 @@ void Interpreter::step(){
     break;
   case OpType::IfNng:
     if (this->reg[command.val[0]] < 0){
-      this->pc = command.val[1] ;
+      this->pc = command.val[1] ; 
     }
     break;
   case OpType::IfEq:
@@ -155,16 +155,17 @@ void Interpreter::step(){
       std::cout << *it << std::endl;
     }
     std::cout << "reg: " << std::endl;
-    for (auto it = this->reg.begin(); it != this->reg.end(); it++){
+    for (auto it = this->reg.begin(); it != this->reg.end(); it++){ 
       std::cout << it->first << ": " << it->second << std::endl;
     }
+    break;
   case OpType::Null:
     
     break;
   default:
     break;
   }
-  _sleep(this->delay);
+  
 }
 std::string opTypeToString(OpType type){
   switch (type){
@@ -192,9 +193,9 @@ void Interpreter::debug(){
     std::cout << it->first << ": " << it->second << std::endl;
   }
   if (this->pc < this->data.size()){
-    std::cout << "data: " << opTypeToString(data[this->pc].type) << std::endl;
+    std::cout << "data: " << opTypeToString(this->data[this->pc].type) << std::endl;  
     std::cout << "val: " << std::endl;
-    for (auto it = data[this->pc].val.begin(); it != data[this->pc].val.end(); it++){
+    for (auto it = this->data[this->pc].val.begin(); it != this->data[this->pc].val.end(); it++){
       std::cout << *it << std::endl;
     }
   }

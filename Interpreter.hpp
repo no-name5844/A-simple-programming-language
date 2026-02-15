@@ -22,17 +22,19 @@ struct Command
 
 class Interpreter{
 public:
-  Interpreter(std::string data="",int delay=1000/60 );
+  Interpreter(std::string data="");
   ~Interpreter();
   std::vector<Command> data;
-  void run();
-  void step();
+
   int pc=0;
   void add(std::string str);
   std::unordered_map<int,int64_t> reg;
   void debug();
+  void run();//不建议使用
+  void step();
   void reset();
-  int delay=1000/60;
+
+
 };
 
 enum class ErrorType{
@@ -49,4 +51,3 @@ bool isNumber(std::string str);
 std::vector<std::string> strToTokens(std::string str);
 Command getOpType(std::vector<std::string> tokens);
 std::string opTypeToString(OpType type);
-
