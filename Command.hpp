@@ -14,22 +14,23 @@ enum class OpType{
   Error,
 };
 
-struct Command
-{
-  OpType type;
-  std::vector<int64_t> val;
-};
-
-
 
 enum class ErrorType{
   None,
   InvalidOp,
   InvalidVal,
-  InvalidReg,
   InvalidIf,
-  InvalidSet,
+  InvalidSyntax,
+};
+
+struct Command
+{
+  OpType type;
+  std::vector<int64_t> val;
+  ErrorType errorType;
+  std::string errorMessage;
 };
 bool isNumber(std::string str);
 std::vector<std::string> strToTokens(std::string str);
 Command getOpType(std::vector<std::string> tokens);
+std::string errorTypeToString(ErrorType type);

@@ -15,20 +15,22 @@ LIBRARY = libInterpreter.lib
 # Source files
 MAIN_SRC = main.cpp
 INTERPRETER_SRC = Interpreter.cpp
+COMMAND_SRC = Command.cpp
 
 # Header files
-HDRS = main.hpp Interpreter.hpp
+HDRS = main.hpp Interpreter.hpp Command.hpp
 
 # Object files
 MAIN_OBJ = $(MAIN_SRC:.cpp=.o)
 INTERPRETER_OBJ = $(INTERPRETER_SRC:.cpp=.o)
+COMMAND_OBJ = $(COMMAND_SRC:.cpp=.o)
 
 # Default target
 all: $(TARGET)
 
 # Link target executable
-$(TARGET): $(MAIN_OBJ) $(INTERPRETER_OBJ)
-	$(CXX) $(CXXFLAGS) -o $@ $(MAIN_OBJ) $(INTERPRETER_OBJ)
+$(TARGET): $(MAIN_OBJ) $(INTERPRETER_OBJ) $(COMMAND_OBJ)
+	$(CXX) $(CXXFLAGS) -o $@ $(MAIN_OBJ) $(INTERPRETER_OBJ) $(COMMAND_OBJ)
 
 # Compile library
 library: $(LIBRARY)
@@ -45,7 +47,7 @@ $(LIBRARY): $(INTERPRETER_OBJ)
 
 # Clean target
 clean:
-	del /f $(MAIN_OBJ) $(INTERPRETER_OBJ) $(TARGET) $(LIBRARY)
+	del /f $(MAIN_OBJ) $(INTERPRETER_OBJ) $(COMMAND_OBJ) $(TARGET) $(LIBRARY)
 
 # Phony targets
 .PHONY: all clean

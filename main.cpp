@@ -2,6 +2,9 @@
 #include "Interpreter.hpp"
 #include <cstring>
 #include <thread>
+#include <signal.h>
+
+
 enum class State{
   Add,
   Clear,
@@ -44,7 +47,8 @@ int main(int argc, char const *argv[])
     while (true){
 
       std::string input;
-      std::getline(std::cin, input);
+      
+      
       if (state == State::Run)
       {
         if (interpreter.pc >= interpreter.data.size()){
@@ -54,13 +58,13 @@ int main(int argc, char const *argv[])
         std::this_thread::sleep_for(std::chrono::milliseconds(config["delay"]));
         continue;
       }
-      
+      std::getline(std::cin, input);
       if (input == "exit"){
         break;
       } else if (input == "step"){
         interpreter.step();
       } else if (input == "run"){
-        interpreter.run();
+        state=State::Run;
       } else if (input == "debug"){
         interpreter.debug();
       }
