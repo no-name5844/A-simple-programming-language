@@ -1,24 +1,8 @@
 #pragma once
-#include "main.hpp"
-enum class OpType{
-  Up,
-  Down,
-  In,
-  Out,
-  IfPos,
-  IfNng,
-  IfEq,
-  IfNeq,
-  Set,
-  Null,
-  Error,
-};
+#include"main.hpp"
+#include"Command.hpp"
 
-struct Command
-{
-  OpType type;
-  std::vector<int64_t> val;
-};
+// Function declarations
 
 class Interpreter{
 public:
@@ -36,18 +20,3 @@ public:
 
 
 };
-
-enum class ErrorType{
-  None,
-  InvalidOp,
-  InvalidVal,
-  InvalidReg,
-  InvalidIf,
-  InvalidSet,
-};
-
-// Function declarations
-bool isNumber(std::string str);
-std::vector<std::string> strToTokens(std::string str);
-Command getOpType(std::vector<std::string> tokens);
-std::string opTypeToString(OpType type);
