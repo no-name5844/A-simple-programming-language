@@ -12,7 +12,7 @@ public:
 
   int pc=0;
   void add(std::string str);
-  std::unordered_map<int,int64_t> reg;
+  std::unordered_map<int64_t,int64_t> reg;
   void debug();
   void run();//不建议使用
   void step();
